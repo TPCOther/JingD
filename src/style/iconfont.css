@@ -1,17 +1,17 @@
 /* 引入阿里图标库 */
 @font-face {
-    font-family: 'iconfont';  /* project id 2405790 */
-    src: url('//at.alicdn.com/t/font_2405790_h1uedw83hch.eot');
-    src: url('//at.alicdn.com/t/font_2405790_h1uedw83hch.eot?#iefix') format('embedded-opentype'),
-    url('//at.alicdn.com/t/font_2405790_h1uedw83hch.woff2') format('woff2'),
-    url('//at.alicdn.com/t/font_2405790_h1uedw83hch.woff') format('woff'),
-    url('//at.alicdn.com/t/font_2405790_h1uedw83hch.ttf') format('truetype'),
-    url('//at.alicdn.com/t/font_2405790_h1uedw83hch.svg#iconfont') format('svg');
+  font-family: 'iconfont';  /* project id 2405790 */
+  src: url('//at.alicdn.com/t/font_2405790_rt0ewpgsk9.eot');
+  src: url('//at.alicdn.com/t/font_2405790_rt0ewpgsk9.eot?#iefix') format('embedded-opentype'),
+  url('//at.alicdn.com/t/font_2405790_rt0ewpgsk9.woff2') format('woff2'),
+  url('//at.alicdn.com/t/font_2405790_rt0ewpgsk9.woff') format('woff'),
+  url('//at.alicdn.com/t/font_2405790_rt0ewpgsk9.ttf') format('truetype'),
+  url('//at.alicdn.com/t/font_2405790_rt0ewpgsk9.svg#iconfont') format('svg');
   }
 
   .iconfont {
     font-family: "iconfont" !important;
-    font-size: 16px;
+    font-size: .16rem;
     font-style: normal;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;

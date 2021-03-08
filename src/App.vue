@@ -1,4 +1,11 @@
 <template>
+  <div class="warpper">
+    <div class="position">
+      <span class="iconfont position__icon">&#xe64f;</span>
+      北京理工大学国防科技园2号楼10层
+      <span class="iconfont position__notice">&#xe7e5;</span>
+    </div>
+  </div>
   <div class="docker">
     <div class="docker__item docker__item--active">
       <div class="iconfont">&#xe9ce;</div>
@@ -20,6 +27,38 @@
 </template>
 
 <style lang="scss">
+@import './style/viriables.scss';
+@import './style/mixins.scss';
+
+.warpper {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: .5rem;
+  right: 0;
+  padding: 0 .18rem;
+}
+
+.position {
+  position: relative;
+  padding: .16rem .24rem .16rem 0;
+  line-height: .22rem;
+  font-size: .16rem;
+  @include ellipsis;
+  .position__icon {
+    position: relative;
+    top: .01rem;
+    font-size: .2rem;
+  }
+  .position__notice {
+    position: absolute;
+    right: 0;
+    top: .17rem;
+    font-size: .2rem;
+  }
+  color: $content-fontcolor;
+}
+
 .docker {
   display: flex;
   position: absolute;
@@ -29,7 +68,8 @@
   bottom: 0;
   width: 100%;
   height: 0.49rem;
-  border-top: 1px solid #F1F1F1;
+  border-top: .01rem solid #F1F1F1;
+  color: $content-fontcolor;
   &__item {
     flex: 1;
     text-align: center;
@@ -42,7 +82,7 @@
     }
   }
   &__title {
-    font-size: 20px;  //页面展示最低12px 想获取10px的展示效果的折中方案
+    font-size: .2rem;  //页面展示最低12px 想获取10px的展示效果的折中方案
     transform: scale(0.5,0.5);
     transform-origin: center top;
   }
