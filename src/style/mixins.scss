@@ -1,0 +1,5 @@
+@mixin ellipsis { //实现长文字省略效果
+overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}

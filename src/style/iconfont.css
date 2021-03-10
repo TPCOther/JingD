@@ -1,0 +1,18 @@
+/* 引入阿里图标库 */
+@font-face {
+  font-family: 'iconfont';  /* project id 2405790 */
+  src: url('//at.alicdn.com/t/font_2405790_ggjfk8t7frf.eot');
+  src: url('//at.alicdn.com/t/font_2405790_ggjfk8t7frf.eot?#iefix') format('embedded-opentype'),
+  url('//at.alicdn.com/t/font_2405790_ggjfk8t7frf.woff2') format('woff2'),
+  url('//at.alicdn.com/t/font_2405790_ggjfk8t7frf.woff') format('woff'),
+  url('//at.alicdn.com/t/font_2405790_ggjfk8t7frf.ttf') format('truetype'),
+  url('//at.alicdn.com/t/font_2405790_ggjfk8t7frf.svg#iconfont') format('svg');
+  }
+
+  .iconfont {
+    font-family: "iconfont" !important;
+    font-size: .16rem;
+    font-style: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }

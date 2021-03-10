@@ -1,7 +1,8 @@
 html {
-    font-size: 100px;
+    font-family: Helvetica, "PingFang SC", "Microsoft Yahei", sans-serif;
+    font-size: 100px; // 通过font-size确定rem大小
 }
 
-div {
-    width: 2rem;
+body {
+    font-size: .12rem;
 }
