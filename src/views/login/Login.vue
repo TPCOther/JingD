@@ -17,39 +17,28 @@
       <div class="warpper__login-button" @click="handleLogin">登录</div>
       <div class="warpper__login-link" @click="handleRegisterClick">立即注册</div>
       <transition name="fade">
-      <Toast v-if="data.showToast" :message="data.toastMessage"/>
+      <Toast v-if="toastData.showToast" :message="toastData.toastMessage"/>
       </transition>
   </div>
 </template>
 
 <script>
+import { reactive } from 'vue'
 import { useRouter } from 'vue-router'
 import { post } from '../../utils/request.js'
-import { reactive } from 'vue'
-import Toast from '../../components/Toast'
+import Toast, { useToastEffect } from '../../components/Toast'
 
 export default {
   name: 'Login',
   components: { Toast },
   setup () {
-    const data = reactive({
-      username: '',
-      password: '',
-      showToast: false,
-      toastMessage: ''
-    })
+    const data = reactive({ username: '', password: '' });
     const router = useRouter();
-    const showToast = (message) => {
-      data.toastMessage = message;
-      data.showToast = true;
-      setTimeout(() => {
-        data.showToast = false;
-        data.toastMessage = '';
-      }, 2000);
-    }
+    const { toastData, showToast } = useToastEffect();
+
     const handleLogin = async () => {
       try {
-        const result = await post('111/api/user/login', {
+        const result = await post('api/user/login', {
           username: data.username,
           password: data.password
         });
@@ -63,10 +52,12 @@ export default {
         showToast('请求失败');
       }
     }
+
     const handleRegisterClick = () => {
       router.push({ name: 'Register' });
     }
-    return { handleLogin, handleRegisterClick, data }
+
+    return { handleLogin, handleRegisterClick, data, toastData }
   }
 }
 </script>
