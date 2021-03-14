@@ -43,7 +43,7 @@ const useRegisterEffect = (showToast) => {
   });
   const router = useRouter();
   const handleRegister = async () => {
-    if (username || password) {
+    if (!data.username.trim().length || !data.password.trim().length) {
       showToast('请输入用户名和密码!');
       return;
     }

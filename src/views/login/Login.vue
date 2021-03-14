@@ -25,14 +25,14 @@
 <script>
 import { reactive, toRefs } from 'vue'
 import { useRouter } from 'vue-router'
-import { post } from '../../utils/request.js'
+import { post } from '../../utils/request'
 import Toast, { useToastEffect } from '../../components/Toast'
 
 const useLoginEffect = (showToast) => {
   const data = reactive({ username: '', password: '' });
   const router = useRouter();
   const handleLogin = async () => {
-    if (username || password) {
+    if (!data.username.trim().length || !data.password.trim().length) {
       showToast('请输入用户名和密码!');
       return;
     }
