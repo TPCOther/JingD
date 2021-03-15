@@ -1,27 +1,16 @@
 <template>
   <div class="nearby">
       <h3 class="nearby__title">附近店铺</h3>
-      <div
-        v-for="item in nearbyList" :key="item._id"
-        class="nearby__item"
-      >
-        <img :src="item.imgUrl" class="nearby__item__img">
-        <div class="nearby__content">
-          <div class="nearby__content__title">{{item.name}}</div>
-          <div class="nearby__content__tags">
-            <span class="nearby__content__tag">月售{{item.sales}}</span>
-            <span class="nearby__content__tag">起送￥{{item.expressLimit}}</span>
-            <span class="nearby__content__tag">运费￥{{item.expressPrice}}</span>
-          </div>
-          <p class="nearby__content__highlight">{{item.slogan}}</p>
-        </div>
-      </div>
+      <ShopInfo
+       v-for="item in nearbyList" :key="item._id"
+       :item="item"/>
     </div>
 </template>
 
 <script>
 import { ref } from 'vue'
 import { get } from '../../utils/request'
+import ShopInfo from '../../components/ShopInfo'
 
 const useNearbyList = () => {
   const nearbyList = ref([]);
@@ -39,8 +28,10 @@ const useNearbyList = () => {
   }
   return { nearbyList, getNearbyList }
 }
+
 export default {
   name: 'Nearby',
+  components: { ShopInfo },
   setup () {
     const { nearbyList, getNearbyList } = useNearbyList();
     getNearbyList();
