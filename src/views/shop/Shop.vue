@@ -10,6 +10,7 @@
       </div>
     </div>
     <ShopInfo :item="item" :hideBorder="true" v-if="item.imgUrl"/>
+    <Content />
   </div>
 </template>
 
@@ -18,6 +19,7 @@ import { reactive, toRefs } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { get } from '../../utils/request'
 import ShopInfo from '../../components/ShopInfo'
+import Content from './Content'
 
 const useShopInfoEffect = () => {
   const route = useRoute();
@@ -42,7 +44,7 @@ const useBackRouterEffect = () => {
 
 export default {
   name: 'Shop',
-  components: { ShopInfo },
+  components: { ShopInfo, Content },
   setup () {
     const handleBackClick = useBackRouterEffect();
     const { item, getItemData } = useShopInfoEffect();
@@ -76,7 +78,7 @@ export default {
       &__icon {
         width: .44rem;
         text-align: center;
-        color: $search-fontcolor;
+        color: $search-fontColor;
       }
       &__input {
         width: 100%;
