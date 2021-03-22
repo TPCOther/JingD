@@ -5,13 +5,13 @@
        class="category__item"
        :class="{'category__item--active': currentTab === item.tab}"
        v-for="item in categories" :key="item.name"
-       @click="() => handleCategoryClick(item.tab)">
+       @click="() => handleTabClick(item.tab)">
        {{item.name}}
        </div>
   </div>
   <div class="product">
       <div class="product__item"
-       v-for="item in contentList" :key="item._id">
+       v-for="item in list" :key="item._id">
           <img class="product__item__img" :src="item.imgUrl">
           <div class="product__item__detail">
               <h4 class="product__item__title">{{item.name}}</h4>
@@ -32,38 +32,50 @@
 </template>
 
 <script>
-import { reactive, toRefs } from 'vue';
+import { reactive, toRefs, ref, watchEffect } from 'vue'
+import { useRoute } from 'vue-router'
 import { get } from '../../utils/request'
+
+const categories = [
+  { name: '全部商品', tab: 'all' },
+  { name: '秒杀', tab: 'seckill' },
+  { name: '新鲜水果', tab: 'fruit' }
+]
+
+// Tab切换相关逻辑
+const useTabEffect = () => {
+  const currentTab = ref(categories[0].tab);
+  const handleTabClick = (tab) => {
+    currentTab.value = tab;
+  }
+  return { currentTab, handleTabClick }
+}
+
+// 列表变更相关函数
+const useCurrentListEffect = (currentTab) => {
+  const route = useRoute();
+  const shopId = route.params.id;
+  const content = reactive({ list: [] });
+
+  const getContentData = async () => {
+    const result = await get(`/api/shop/${shopId}/products`, { tab: currentTab.value });
+    if (result?.errno === 0 && result?.data?.length) {
+      content.list = result.data;
+    }
+  }
+
+  watchEffect(() => { getContentData(); });
+
+  const { list } = toRefs(content);
+  return { list }
+}
+
 export default {
   name: 'Content',
   setup () {
-    const categories = [{
-      name: '全部商品',
-      tab: 'all'
-    }, {
-      name: '秒杀',
-      tab: 'seckill'
-    }, {
-      name: '新鲜水果',
-      tab: 'fruit'
-    }]
-    const data = reactive({
-      currentTab: 'all',
-      contentList: []
-    });
-    const getContentData = async (tab) => {
-      const result = await get('/api/shop/1/products', { tab });
-      if (result?.errno === 0 && result?.data?.length) {
-        data.contentList = result.data;
-      }
-    }
-    const handleCategoryClick = (tab) => {
-      getContentData(tab);
-      data.currentTab = tab;
-    }
-    getContentData('all');
-    const { contentList, currentTab } = toRefs(data);
-    return { contentList, categories, handleCategoryClick, currentTab }
+    const { currentTab, handleTabClick } = useTabEffect();
+    const { list } = useCurrentListEffect(currentTab);
+    return { list, categories, handleTabClick, currentTab }
   }
 }
 </script>
