@@ -1,51 +1,42 @@
 <template>
   <div class="nearby">
       <h3 class="nearby__title">附近店铺</h3>
-      <div
-        v-for="item in nearbyList" :key="item.id"
-        class="nearby__item"
-      >
-        <img :src="item.imgUrl" class="nearby__item__img">
-        <div class="nearby__content">
-          <div class="nearby__content__title">{{item.title}}</div>
-          <div class="nearby__content__tags">
-            <span
-              v-for="(innerItem, innerIndex) in item.tags" :key="innerIndex"
-              class="nearby__content__tag">{{innerItem}}</span>
-          </div>
-          <p class="nearby__content__highlight">{{item.desc}}</p>
-        </div>
-      </div>
+      <router-link
+       v-for="item in nearbyList" :key="item._id"
+       :to="`/shop/${item._id}`">
+        <ShopInfo :item="item"/>
+      </router-link>
     </div>
 </template>
 
 <script>
+import { ref } from 'vue'
+import { get } from '../../utils/request'
+import ShopInfo from '../../components/ShopInfo'
+
+const useNearbyList = () => {
+  const nearbyList = ref([]);
+  const getNearbyList = async () => {
+    try {
+      const result = await get('api/shop/hot-list');
+      if (result?.errno === 0 && result?.data?.length) {
+        nearbyList.value = result.data
+      } else {
+        // showToast('获取失败');
+      }
+    } catch (e) {
+      // showToast('请求失败');
+    }
+  }
+  return { nearbyList, getNearbyList }
+}
+
 export default {
   name: 'Nearby',
+  components: { ShopInfo },
   setup () {
-    const nearbyList = [
-      {
-        id: 1,
-        imgUrl: 'http://www.dell-lee.com/imgs/vue3/near.png',
-        title: '沃尔玛',
-        tags: ['月售1万+', '起送￥0', '基础运费￥5'],
-        desc: 'VIP尊享满89减4元运费券(每月三张)'
-      },
-      {
-        id: 2,
-        imgUrl: 'http://www.dell-lee.com/imgs/vue3/near.png',
-        title: '沃尔玛',
-        tags: ['月售1万+', '起送￥0', '基础运费￥5'],
-        desc: 'VIP尊享满89减4元运费券(每月三张)'
-      },
-      {
-        id: 3,
-        imgUrl: 'http://www.dell-lee.com/imgs/vue3/near.png',
-        title: '沃尔玛',
-        tags: ['月售1万+', '起送￥0', '基础运费￥5'],
-        desc: 'VIP尊享满89减4元运费券(每月三张)'
-      }
-    ]
+    const { nearbyList, getNearbyList } = useNearbyList();
+    getNearbyList();
     return { nearbyList }
   }
 }
@@ -60,6 +51,9 @@ export default {
     font-size: .18rem;
     font-weight: normal;
     color: $content-fontcolor;
+  }
+  a {
+    text-decoration: none;
   }
   &__item{
     display: flex;

@@ -43,7 +43,7 @@ const useRegisterEffect = (showToast) => {
   });
   const router = useRouter();
   const handleRegister = async () => {
-    if (username || password) {
+    if (!data.username.trim().length || !data.password.trim().length) {
       showToast('请输入用户名和密码!');
       return;
     }
@@ -134,7 +134,7 @@ export default {
     &__register-button {
         margin: .32rem .4rem .16rem .4rem;
         line-height: .48rem;
-        background: #0091FF;
+        background: $btn-bgColor;
         box-shadow: 0 .04rem .08rem 0 rgba(0,145,255,0.32);
         border-radius: .04rem;
         color: #FFF;
