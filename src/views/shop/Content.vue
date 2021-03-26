@@ -22,9 +22,11 @@
                </p>
           </div>
           <div class="product__number">
-              <span class="product__number__minus">-</span>
-              0
-              <span class="product__number__plus">+</span>
+              <span class="product__number__minus"
+               @click="() => { changeItemToCart(shopId, item._id, item, -1) }">-</span>
+              {{cartList?.[shopId]?.[item._id]?.count || 0}}
+              <span class="product__number__plus"
+               @click="() => { changeItemToCart(shopId, item._id, item, 1) }">+</span>
           </div>
       </div>
   </div>
@@ -34,6 +36,7 @@
 <script>
 import { reactive, toRefs, ref, watchEffect } from 'vue'
 import { useRoute } from 'vue-router'
+import { useStore } from 'vuex'
 import { get } from '../../utils/request'
 
 const categories = [
@@ -52,9 +55,7 @@ const useTabEffect = () => {
 }
 
 // 列表变更相关函数
-const useCurrentListEffect = (currentTab) => {
-  const route = useRoute();
-  const shopId = route.params.id;
+const useCurrentListEffect = (currentTab, shopId) => {
   const content = reactive({ list: [] });
 
   const getContentData = async () => {
@@ -70,12 +71,24 @@ const useCurrentListEffect = (currentTab) => {
   return { list }
 }
 
+const useCartEffect = () => {
+  const store = useStore();
+  const { cartList } = toRefs(store.state);
+  const changeItemToCart = (shopId, productId, productInfo, num) => {
+    store.commit('changeItemToCart', { shopId, productId, productInfo, num });
+  }
+  return { cartList, changeItemToCart }
+}
+
 export default {
   name: 'Content',
   setup () {
+    const route = useRoute();
+    const shopId = route.params.id;
     const { currentTab, handleTabClick } = useTabEffect();
-    const { list } = useCurrentListEffect(currentTab);
-    return { list, categories, handleTabClick, currentTab }
+    const { list } = useCurrentListEffect(currentTab, shopId);
+    const { cartList, changeItemToCart } = useCartEffect();
+    return { list, categories, handleTabClick, currentTab, cartList, shopId, changeItemToCart }
   }
 }
 </script>
